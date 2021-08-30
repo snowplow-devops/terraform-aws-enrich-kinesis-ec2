@@ -3,7 +3,7 @@ locals {
   module_version = "0.1.4"
 
   app_name    = "stream-enrich"
-  app_version = "1.4.2"
+  app_version = "2.0.2"
 
   local_tags = {
     Name           = var.name
@@ -26,7 +26,7 @@ data "aws_caller_identity" "current" {}
 
 module "telemetry" {
   source  = "snowplow-devops/telemetry/snowplow"
-  version = "0.1.0"
+  version = "0.2.0"
 
   count = var.telemetry_enabled ? 1 : 0
 
@@ -82,7 +82,7 @@ resource "aws_dynamodb_table" "kcl" {
 
 module "kcl_autoscaling" {
   source  = "snowplow-devops/dynamodb-autoscaling/aws"
-  version = "0.1.0"
+  version = "0.1.1"
 
   table_name = aws_dynamodb_table.kcl.id
 
@@ -114,7 +114,7 @@ resource "aws_dynamodb_table" "config" {
 
 module "config_autoscaling" {
   source  = "snowplow-devops/dynamodb-autoscaling/aws"
-  version = "0.1.0"
+  version = "0.1.1"
 
   table_name = aws_dynamodb_table.config.id
 }
@@ -415,7 +415,7 @@ resource "aws_launch_configuration" "lc" {
 
 module "tags" {
   source  = "snowplow-devops/tags/aws"
-  version = "0.1.0"
+  version = "0.1.1"
 
   tags = local.tags
 }

@@ -29,21 +29,21 @@ By default this module enables 5 enrichments which you can find in the `template
 ```hcl
 module "raw_stream" {
   source  = "snowplow-devops/kinesis-stream/aws"
-  version = "0.1.0"
+  version = "0.1.1"
 
   name = "raw-stream"
 }
 
 module "enriched_stream" {
   source  = "snowplow-devops/kinesis-stream/aws"
-  version = "0.1.0"
+  version = "0.1.1"
 
   name = "enriched-stream"
 }
 
 module "bad_1_stream" {
   source  = "snowplow-devops/kinesis-stream/aws"
-  version = "0.1.0"
+  version = "0.1.1"
 
   name = "bad-1-stream"
 }
@@ -191,10 +191,10 @@ module "enrich_kinesis" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_config_autoscaling"></a> [config\_autoscaling](#module\_config\_autoscaling) | snowplow-devops/dynamodb-autoscaling/aws | 0.1.0 |
-| <a name="module_kcl_autoscaling"></a> [kcl\_autoscaling](#module\_kcl\_autoscaling) | snowplow-devops/dynamodb-autoscaling/aws | 0.1.0 |
-| <a name="module_tags"></a> [tags](#module\_tags) | snowplow-devops/tags/aws | 0.1.0 |
-| <a name="module_telemetry"></a> [telemetry](#module\_telemetry) | snowplow-devops/telemetry/snowplow | 0.1.0 |
+| <a name="module_config_autoscaling"></a> [config\_autoscaling](#module\_config\_autoscaling) | snowplow-devops/dynamodb-autoscaling/aws | 0.1.1 |
+| <a name="module_kcl_autoscaling"></a> [kcl\_autoscaling](#module\_kcl\_autoscaling) | snowplow-devops/dynamodb-autoscaling/aws | 0.1.1 |
+| <a name="module_tags"></a> [tags](#module\_tags) | snowplow-devops/tags/aws | 0.1.1 |
+| <a name="module_telemetry"></a> [telemetry](#module\_telemetry) | snowplow-devops/telemetry/snowplow | 0.2.0 |
 
 ## Resources
 
@@ -245,8 +245,8 @@ module "enrich_kinesis" {
 | <a name="input_in_stream_name"></a> [in\_stream\_name](#input\_in\_stream\_name) | The name of the input kinesis stream that the Enricher will pull data from | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | A name which will be pre-pended to the resources created | `string` | n/a | yes |
 | <a name="input_ssh_key_name"></a> [ssh\_key\_name](#input\_ssh\_key\_name) | The name of the SSH key-pair to attach to all EC2 nodes deployed | `string` | n/a | yes |
-| <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | The list of subnets to deploy the S3 Loader across | `list(string)` | n/a | yes |
-| <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The VPC to deploy the S3 Loader within | `string` | n/a | yes |
+| <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | The list of subnets to deploy Enrich across | `list(string)` | n/a | yes |
+| <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The VPC to deploy Enrich within | `string` | n/a | yes |
 | <a name="input_amazon_linux_2_ami_id"></a> [amazon\_linux\_2\_ami\_id](#input\_amazon\_linux\_2\_ami\_id) | The AMI ID to use which must be based of of Amazon Linux 2; by default the latest community version is used | `string` | `""` | no |
 | <a name="input_associate_public_ip_address"></a> [associate\_public\_ip\_address](#input\_associate\_public\_ip\_address) | Whether to assign a public ip address to this instance | `bool` | `true` | no |
 | <a name="input_byte_limit"></a> [byte\_limit](#input\_byte\_limit) | The amount of bytes to buffer events before pushing them to Kinesis | `number` | `1000000` | no |
@@ -264,7 +264,7 @@ module "enrich_kinesis" {
 | <a name="input_enrichment_event_fingerprint_config"></a> [enrichment\_event\_fingerprint\_config](#input\_enrichment\_event\_fingerprint\_config) | n/a | `string` | `""` | no |
 | <a name="input_enrichment_http_header_extractor_config"></a> [enrichment\_http\_header\_extractor\_config](#input\_enrichment\_http\_header\_extractor\_config) | n/a | `string` | `""` | no |
 | <a name="input_enrichment_iab_spiders_and_bots_enrichment"></a> [enrichment\_iab\_spiders\_and\_bots\_enrichment](#input\_enrichment\_iab\_spiders\_and\_bots\_enrichment) | Note: Requires paid database to function | `string` | `""` | no |
-| <a name="input_enrichment_ip_lookups"></a> [enrichment\_ip\_lookups](#input\_enrichment\_ip\_lookups) | Note: Requires free or paid subcription to database to function | `string` | `""` | no |
+| <a name="input_enrichment_ip_lookups"></a> [enrichment\_ip\_lookups](#input\_enrichment\_ip\_lookups) | Note: Requires free or paid subscription to database to function | `string` | `""` | no |
 | <a name="input_enrichment_javascript_script_config"></a> [enrichment\_javascript\_script\_config](#input\_enrichment\_javascript\_script\_config) | n/a | `string` | `""` | no |
 | <a name="input_enrichment_pii_enrichment_config"></a> [enrichment\_pii\_enrichment\_config](#input\_enrichment\_pii\_enrichment\_config) | n/a | `string` | `""` | no |
 | <a name="input_enrichment_referer_parser"></a> [enrichment\_referer\_parser](#input\_enrichment\_referer\_parser) | n/a | `string` | `""` | no |
@@ -294,7 +294,7 @@ module "enrich_kinesis" {
 |------|-------------|
 | <a name="output_asg_id"></a> [asg\_id](#output\_asg\_id) | ID of the ASG |
 | <a name="output_asg_name"></a> [asg\_name](#output\_asg\_name) | Name of the ASG |
-| <a name="output_sg_id"></a> [sg\_id](#output\_sg\_id) | ID of the security group attached to the S3 Loader servers |
+| <a name="output_sg_id"></a> [sg\_id](#output\_sg\_id) | ID of the security group attached to the Enrich servers |
 
 # Copyright and license
 

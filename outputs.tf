@@ -10,5 +10,5 @@ output "asg_name" {
 
 output "sg_id" {
   value       = aws_security_group.sg.id
-  description = "ID of the security group attached to the S3 Loader servers"
+  description = "ID of the security group attached to the Enrich servers"
 }

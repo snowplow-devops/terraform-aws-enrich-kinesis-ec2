@@ -4,12 +4,12 @@ variable "name" {
 }
 
 variable "vpc_id" {
-  description = "The VPC to deploy the S3 Loader within"
+  description = "The VPC to deploy Enrich within"
   type        = string
 }
 
 variable "subnet_ids" {
-  description = "The list of subnets to deploy the S3 Loader across"
+  description = "The list of subnets to deploy Enrich across"
   type        = list(string)
 }
 
@@ -285,7 +285,7 @@ variable "enrichment_iab_spiders_and_bots_enrichment" {
   type    = string
 }
 
-# Note: Requires free or paid subcription to database to function
+# Note: Requires free or paid subscription to database to function
 variable "enrichment_ip_lookups" {
   default = ""
   type    = string
