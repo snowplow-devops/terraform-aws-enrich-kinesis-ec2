@@ -3,7 +3,7 @@ locals {
   module_version = "0.2.0"
 
   app_name    = "stream-enrich"
-  app_version = "2.0.2"
+  app_version = "2.0.5"
 
   local_tags = {
     Name           = var.name
