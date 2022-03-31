@@ -41,10 +41,9 @@ sudo docker run \
 %{ endif ~}
   -v $${CONFIG_DIR}:/snowplow/config \
   -e 'JAVA_OPTS=-Dorg.slf4j.simpleLogger.defaultLogLevel=info' \
-  snowplow/stream-enrich-kinesis:${version} \
+  snowplow/snowplow-enrich-kinesis:${version} \
   --config /snowplow/config/enrich.hocon \
-  --resolver ${resolver} \
-  --enrichments ${enrichments} \
-  --force-cached-files-download
+  --iglu-config ${resolver} \
+  --enrichments ${enrichments}
 
 ${telemetry_script}

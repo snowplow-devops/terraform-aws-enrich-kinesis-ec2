@@ -2,7 +2,7 @@
 
 # terraform-aws-enrich-kinesis-ec2
 
-A Terraform module which deploys the Snowplow Stream Enrich service on EC2.  If you want to use a custom AMI for this deployment you will need to ensure it is based on top of Amazon Linux 2.
+A Terraform module which deploys Snowplow Enrich service on EC2. If you want to use a custom AMI for this deployment you will need to ensure it is based on top of Amazon Linux 2.
 
 ## Telemetry
 
@@ -247,6 +247,7 @@ module "enrich_kinesis" {
 | <a name="input_ssh_key_name"></a> [ssh\_key\_name](#input\_ssh\_key\_name) | The name of the SSH key-pair to attach to all EC2 nodes deployed | `string` | n/a | yes |
 | <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | The list of subnets to deploy Enrich across | `list(string)` | n/a | yes |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The VPC to deploy Enrich within | `string` | n/a | yes |
+| <a name="input_assets_update_period"></a> [assets\_update\_period](#input\_assets\_update\_period) | Period after which enrich assets should be checked for updates (e.g. MaxMind DB) | `string` | `"7 days"` | yes |
 | <a name="input_amazon_linux_2_ami_id"></a> [amazon\_linux\_2\_ami\_id](#input\_amazon\_linux\_2\_ami\_id) | The AMI ID to use which must be based of of Amazon Linux 2; by default the latest community version is used | `string` | `""` | no |
 | <a name="input_associate_public_ip_address"></a> [associate\_public\_ip\_address](#input\_associate\_public\_ip\_address) | Whether to assign a public ip address to this instance | `bool` | `true` | no |
 | <a name="input_byte_limit"></a> [byte\_limit](#input\_byte\_limit) | The amount of bytes to buffer events before pushing them to Kinesis | `number` | `1000000` | no |

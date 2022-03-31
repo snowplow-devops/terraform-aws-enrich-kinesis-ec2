@@ -2,8 +2,8 @@ locals {
   module_name    = "enrich-kinesis-ec2"
   module_version = "0.2.1"
 
-  app_name    = "stream-enrich"
-  app_version = "2.0.5"
+  app_name    = "enrich-kinesis"
+  app_version = "3.0.3"
 
   local_tags = {
     Name           = var.name
@@ -153,7 +153,7 @@ EOF
 
 resource "aws_iam_role" "iam_role" {
   name        = var.name
-  description = "Allows the S3 Loader nodes to access required services"
+  description = "Allows the nodes to access required services"
   tags        = local.tags
 
   assume_role_policy = <<EOF
@@ -285,6 +285,13 @@ resource "aws_iam_policy" "iam_policy" {
         "arn:aws:s3:::snowplow-hosted-assets-ap-northeast-2",
         "arn:aws:s3:::snowplow-hosted-assets-ap-northeast-2/*"
       ]
+    },
+    {
+      "Action": [
+        "cloudwatch:PutMetricData"
+      ],
+      "Effect":"Allow",
+      "Resource": ["*"]
     }${local.custom_s3_hosted_assets_bucket_policy_final}
   ]
 }
@@ -373,6 +380,15 @@ locals {
     byte_limit    = var.byte_limit
     record_limit  = var.record_limit
     time_limit_ms = var.time_limit_ms
+
+    assets_update_period = var.assets_update_period
+
+    disable           = !tobool(var.telemetry_enabled)
+    telemetry_url     = join("", module.telemetry.*.collector_uri)
+    user_provided_id  = var.user_provided_id
+    auto_generated_id = join("", module.telemetry.*.auto_generated_id)
+    module_name       = local.module_name
+    module_version    = local.module_version
   })
 
   user_data = templatefile("${path.module}/templates/user-data.sh.tmpl", {

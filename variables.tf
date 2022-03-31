@@ -4,7 +4,7 @@ variable "name" {
 }
 
 variable "vpc_id" {
-  description = "The VPC to deploy Enrich within"
+  description = "The VPC to deploy Enrich within (must have DNS hostnames enabled)"
   type        = string
 }
 
@@ -141,6 +141,12 @@ variable "time_limit_ms" {
   description = "The amount of time to buffer events before pushing them to Kinesis"
   default     = 500
   type        = number
+}
+
+variable "assets_update_period" {
+  description = "Period after which enrich assets should be checked for updates (e.g. MaxMind DB)"
+  default     = "7 days"
+  type        = string
 }
 
 # --- Enrichment options
