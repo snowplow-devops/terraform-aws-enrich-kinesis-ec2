@@ -147,6 +147,11 @@ variable "assets_update_period" {
   description = "Period after which enrich assets should be checked for updates (e.g. MaxMind DB)"
   default     = "7 days"
   type        = string
+
+  validation {
+    condition     = can(regex("\\d+ (ns|nano|nanos|nanosecond|nanoseconds|us|micro|micros|microsecond|microseconds|ms|milli|millis|millisecond|milliseconds|s|second|seconds|m|minute|minutes|h|hour|hours|d|day|days)", var.assets_update_period))
+    error_message = "Invalid period formant."
+  }
 }
 
 # --- Enrichment options

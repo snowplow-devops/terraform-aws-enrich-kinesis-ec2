@@ -285,13 +285,6 @@ resource "aws_iam_policy" "iam_policy" {
         "arn:aws:s3:::snowplow-hosted-assets-ap-northeast-2",
         "arn:aws:s3:::snowplow-hosted-assets-ap-northeast-2/*"
       ]
-    },
-    {
-      "Action": [
-        "cloudwatch:PutMetricData"
-      ],
-      "Effect":"Allow",
-      "Resource": ["*"]
     }${local.custom_s3_hosted_assets_bucket_policy_final}
   ]
 }
