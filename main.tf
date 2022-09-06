@@ -442,6 +442,8 @@ resource "aws_autoscaling_group" "asg" {
 
   vpc_zone_identifier = var.subnet_ids
 
+  enabled_metrics = var.enable_autoscaling_metrics
+
   instance_refresh {
     strategy = "Rolling"
     preferences {
