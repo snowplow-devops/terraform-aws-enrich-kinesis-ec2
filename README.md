@@ -29,21 +29,21 @@ By default this module enables 5 enrichments which you can find in the `template
 ```hcl
 module "raw_stream" {
   source  = "snowplow-devops/kinesis-stream/aws"
-  version = "0.1.1"
+  version = "0.2.0"
 
   name = "raw-stream"
 }
 
 module "enriched_stream" {
   source  = "snowplow-devops/kinesis-stream/aws"
-  version = "0.1.1"
+  version = "0.2.0"
 
   name = "enriched-stream"
 }
 
 module "bad_1_stream" {
   source  = "snowplow-devops/kinesis-stream/aws"
-  version = "0.1.1"
+  version = "0.2.0"
 
   name = "bad-1-stream"
 }
@@ -178,23 +178,24 @@ module "enrich_kinesis" {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.15 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.25.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.45.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.25.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.45.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_config_autoscaling"></a> [config\_autoscaling](#module\_config\_autoscaling) | snowplow-devops/dynamodb-autoscaling/aws | 0.1.1 |
-| <a name="module_kcl_autoscaling"></a> [kcl\_autoscaling](#module\_kcl\_autoscaling) | snowplow-devops/dynamodb-autoscaling/aws | 0.1.1 |
-| <a name="module_tags"></a> [tags](#module\_tags) | snowplow-devops/tags/aws | 0.1.1 |
-| <a name="module_telemetry"></a> [telemetry](#module\_telemetry) | snowplow-devops/telemetry/snowplow | 0.2.0 |
+| <a name="module_config_autoscaling"></a> [config\_autoscaling](#module\_config\_autoscaling) | snowplow-devops/dynamodb-autoscaling/aws | 0.2.0 |
+| <a name="module_instance_type_metrics"></a> [instance\_type\_metrics](#module\_instance\_type\_metrics) | snowplow-devops/ec2-instance-type-metrics/aws | 0.1.2 |
+| <a name="module_kcl_autoscaling"></a> [kcl\_autoscaling](#module\_kcl\_autoscaling) | snowplow-devops/dynamodb-autoscaling/aws | 0.2.0 |
+| <a name="module_tags"></a> [tags](#module\_tags) | snowplow-devops/tags/aws | 0.2.0 |
+| <a name="module_telemetry"></a> [telemetry](#module\_telemetry) | snowplow-devops/telemetry/snowplow | 0.3.0 |
 
 ## Resources
 
@@ -275,7 +276,8 @@ module "enrich_kinesis" {
 | <a name="input_enrichment_yauaa_enrichment_config"></a> [enrichment\_yauaa\_enrichment\_config](#input\_enrichment\_yauaa\_enrichment\_config) | n/a | `string` | `""` | no |
 | <a name="input_iam_permissions_boundary"></a> [iam\_permissions\_boundary](#input\_iam\_permissions\_boundary) | The permissions boundary ARN to set on IAM roles created | `string` | `""` | no |
 | <a name="input_initial_position"></a> [initial\_position](#input\_initial\_position) | Where to start processing the input Kinesis Stream from (TRIM\_HORIZON or LATEST) | `string` | `"TRIM_HORIZON"` | no |
-| <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | The instance type to use | `string` | `"t3.micro"` | no |
+| <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | The instance type to use | `string` | `"t3a.small"` | no |
+| <a name="input_java_opts"></a> [java\_opts](#input\_java\_opts) | Custom JAVA Options | `string` | `"-Dorg.slf4j.simpleLogger.defaultLogLevel=info -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=75"` | no |
 | <a name="input_kcl_read_max_capacity"></a> [kcl\_read\_max\_capacity](#input\_kcl\_read\_max\_capacity) | The maximum READ capacity for the KCL DynamoDB table | `number` | `10` | no |
 | <a name="input_kcl_read_min_capacity"></a> [kcl\_read\_min\_capacity](#input\_kcl\_read\_min\_capacity) | The minimum READ capacity for the KCL DynamoDB table | `number` | `1` | no |
 | <a name="input_kcl_write_max_capacity"></a> [kcl\_write\_max\_capacity](#input\_kcl\_write\_max\_capacity) | The maximum WRITE capacity for the KCL DynamoDB table | `number` | `10` | no |
@@ -299,7 +301,7 @@ module "enrich_kinesis" {
 
 # Copyright and license
 
-The Terraform AWS Enrich Kinesis on EC2 project is Copyright 2021-2021 Snowplow Analytics Ltd.
+The Terraform AWS Enrich Kinesis on EC2 project is Copyright 2021-2022 Snowplow Analytics Ltd.
 
 Licensed under the [Apache License, Version 2.0][license] (the "License");
 you may not use this software except in compliance with the License.
