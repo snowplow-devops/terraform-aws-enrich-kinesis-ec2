@@ -3,7 +3,7 @@ locals {
   module_version = "0.3.1"
 
   app_name    = "enrich-kinesis"
-  app_version = "3.0.3"
+  app_version = "3.6.0"
 
   local_tags = {
     Name           = var.name
