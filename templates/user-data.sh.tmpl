@@ -20,7 +20,8 @@ sudo docker run \
   --log-opt max-file=5 \
 %{ endif ~}
   -v $${CONFIG_DIR}:/snowplow/config \
-  -e 'JAVA_OPTS=${java_opts}' \
+  -e 'JAVA_OPTS=-Dconfig.override_with_env_vars=true ${java_opts}' \
+  -e "CONFIG_FORCE_telemetry_instanceId=$(get_instance_id)" \
   snowplow/snowplow-enrich-kinesis:${version} \
   --config /snowplow/config/enrich.hocon \
   --iglu-config ${resolver} \

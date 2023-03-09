@@ -362,12 +362,14 @@ locals {
 
     assets_update_period = var.assets_update_period
 
-    disable           = !tobool(var.telemetry_enabled)
-    telemetry_url     = join("", module.telemetry.*.collector_uri)
-    user_provided_id  = var.user_provided_id
-    auto_generated_id = join("", module.telemetry.*.auto_generated_id)
-    module_name       = local.module_name
-    module_version    = local.module_version
+    telemetry_disable          = !var.telemetry_enabled
+    telemetry_collector_uri    = join("", module.telemetry.*.collector_uri)
+    telemetry_collector_port   = 443
+    telemetry_secure           = true
+    telemetry_user_provided_id = var.user_provided_id
+    telemetry_auto_gen_id      = join("", module.telemetry.*.auto_generated_id)
+    telemetry_module_name      = local.module_name
+    telemetry_module_version   = local.module_version
   })
 
   user_data = templatefile("${path.module}/templates/user-data.sh.tmpl", {
