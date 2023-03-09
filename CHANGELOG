@@ -1,3 +1,8 @@
+Version 0.5.1 (2023-03-09)
+--------------------------
+Bump service module to v0.1.1 (#27)
+Fix application telemetry instance_id (#28)
+
 Version 0.5.0 (2023-02-20)
 --------------------------
 Bump app_version to 3.7.0 (#24)
