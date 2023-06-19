@@ -1,6 +1,6 @@
 locals {
   module_name    = "enrich-kinesis-ec2"
-  module_version = "0.5.1"
+  module_version = "0.5.2"
 
   app_name    = "enrich-kinesis"
   app_version = "3.8.0"
