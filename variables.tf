@@ -14,6 +14,12 @@ variable "name" {
   type        = string
 }
 
+variable "app_version" {
+  description = "App version to use. This variable facilitates dev flow, the modules may not work with anything other than the default value."
+  type        = string
+  default     = "3.9.0"
+}
+
 variable "vpc_id" {
   description = "The VPC to deploy Enrich within (must have DNS hostnames enabled)"
   type        = string
@@ -115,7 +121,7 @@ variable "cloudwatch_logs_retention_days" {
 
 variable "java_opts" {
   description = "Custom JAVA Options"
-  default     = "-Dorg.slf4j.simpleLogger.defaultLogLevel=info -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=75"
+  default     = "-XX:InitialRAMPercentage=75 -XX:MaxRAMPercentage=75"
   type        = string
 }
 

@@ -3,7 +3,7 @@ locals {
   module_version = "0.5.3"
 
   app_name    = "enrich-kinesis"
-  app_version = "3.8.0"
+  app_version = var.app_version
 
   local_tags = {
     Name           = var.name
@@ -26,7 +26,7 @@ data "aws_caller_identity" "current" {}
 
 module "telemetry" {
   source  = "snowplow-devops/telemetry/snowplow"
-  version = "0.4.0"
+  version = "0.5.0"
 
   count = var.telemetry_enabled ? 1 : 0
 
@@ -375,7 +375,7 @@ locals {
   user_data = templatefile("${path.module}/templates/user-data.sh.tmpl", {
     accept_limited_use_license = var.accept_limited_use_license
 
-    config      = local.hocon
+    config_b64  = base64encode(local.hocon)
     version     = local.app_version
     resolver    = "dynamodb:${data.aws_region.current.name}/${aws_dynamodb_table.config.name}/snowplow_resolver"
     enrichments = "dynamodb:${data.aws_region.current.name}/${aws_dynamodb_table.config.name}/snowplow_enrichment_"
