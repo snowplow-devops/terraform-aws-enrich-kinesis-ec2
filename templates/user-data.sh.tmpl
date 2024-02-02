@@ -21,6 +21,7 @@ sudo docker run \
 %{ endif ~}
   -v $${CONFIG_DIR}:/snowplow/config \
   -e 'JAVA_OPTS=-Dconfig.override_with_env_vars=true ${java_opts}' \
+  --env ACCEPT_LIMITED_USE_LICENSE=${accept_limited_use_license} \
   -e "CONFIG_FORCE_telemetry_instanceId=$(get_instance_id)" \
   snowplow/snowplow-enrich-kinesis:${version} \
   --config /snowplow/config/enrich.hocon \
