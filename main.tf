@@ -375,7 +375,7 @@ locals {
   user_data = templatefile("${path.module}/templates/user-data.sh.tmpl", {
     accept_limited_use_license = var.accept_limited_use_license
 
-    config_b64  = base64encode(local.hocon)
+    config_b64  = var.config_override_b64 == "" ? base64encode(local.hocon) : var.config_override_b64
     version     = local.app_version
     resolver    = "dynamodb:${data.aws_region.current.name}/${aws_dynamodb_table.config.name}/snowplow_resolver"
     enrichments = "dynamodb:${data.aws_region.current.name}/${aws_dynamodb_table.config.name}/snowplow_enrichment_"
