@@ -192,6 +192,12 @@ variable "incomplete_stream_name" {
   default     = ""
 }
 
+variable "pii_stream_name" {
+  description = "The name of the pii kinesis stream that the Enricher will insert events with pii in it"
+  type        = string
+  default     = ""
+}
+
 variable "initial_position" {
   description = "Where to start processing the input Kinesis Stream from (TRIM_HORIZON or LATEST)"
   default     = "TRIM_HORIZON"

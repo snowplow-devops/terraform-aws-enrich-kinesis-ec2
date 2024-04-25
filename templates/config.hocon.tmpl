@@ -42,6 +42,18 @@
       }
     }
     %{ endif}
+    %{ if pii_stream_name != ""}
+    "pii": {
+      "type": "Kinesis"
+      "streamName": "${pii_stream_name}"
+      "region": "${region}"
+      "maxBufferedTime": ${time_limit_ms} millis
+      "collection": {
+        "maxCount": ${record_limit}
+        "maxSize": ${byte_limit}
+      }
+    }
+    %{ endif}
   }
 
   "assetsUpdatePeriod": "${assets_update_period}"

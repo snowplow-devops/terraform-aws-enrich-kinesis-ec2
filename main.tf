@@ -153,6 +153,7 @@ EOF
 
 locals {
   incomplete_tmpl_for_iam = var.incomplete_stream_name == "" ? "" : "\"arn:aws:kinesis:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:stream/${var.incomplete_stream_name}\","
+  pii_tmpl_for_iam        = var.pii_stream_name == "" ? "" : "\"arn:aws:kinesis:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:stream/${var.pii_stream_name}\","
 }
 
 resource "aws_iam_policy" "iam_policy" {
@@ -171,6 +172,7 @@ resource "aws_iam_policy" "iam_policy" {
       ],
       "Resource": [
         ${local.incomplete_tmpl_for_iam}
+        ${local.pii_tmpl_for_iam}
         "arn:aws:kinesis:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:stream/${var.in_stream_name}",
         "arn:aws:kinesis:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:stream/${var.enriched_stream_name}",
         "arn:aws:kinesis:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:stream/${var.bad_stream_name}"
@@ -192,6 +194,7 @@ resource "aws_iam_policy" "iam_policy" {
       ],
       "Resource": [
         ${local.incomplete_tmpl_for_iam}
+        ${local.pii_tmpl_for_iam}
         "arn:aws:kinesis:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:stream/${var.enriched_stream_name}",
         "arn:aws:kinesis:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:stream/${var.bad_stream_name}"
       ]
@@ -358,6 +361,7 @@ locals {
     enriched_stream_name   = var.enriched_stream_name
     bad_stream_name        = var.bad_stream_name
     incomplete_stream_name = var.incomplete_stream_name
+    pii_stream_name        = var.pii_stream_name
     region                 = data.aws_region.current.name
     initial_position       = var.initial_position
 
