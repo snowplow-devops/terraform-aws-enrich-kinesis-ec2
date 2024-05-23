@@ -20,6 +20,12 @@ variable "app_version" {
   default     = "3.9.0"
 }
 
+variable "config_override_b64" {
+  description = "App config uploaded as a base64 encoded blob. This variable facilitates dev flow, if config is incorrect this can break the deployment."
+  type        = string
+  default     = ""
+}
+
 variable "vpc_id" {
   description = "The VPC to deploy Enrich within (must have DNS hostnames enabled)"
   type        = string
