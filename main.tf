@@ -90,33 +90,6 @@ module "kcl_autoscaling" {
   write_max_capacity = var.kcl_write_max_capacity
 }
 
-# --- DynamoDB: Configuration Table
-
-resource "aws_dynamodb_table" "config" {
-  name           = "${var.name}-config"
-  hash_key       = "id"
-  write_capacity = 1
-  read_capacity  = 1
-
-  attribute {
-    name = "id"
-    type = "S"
-  }
-
-  lifecycle {
-    ignore_changes = [write_capacity, read_capacity]
-  }
-
-  tags = local.tags
-}
-
-module "config_autoscaling" {
-  source  = "snowplow-devops/dynamodb-autoscaling/aws"
-  version = "0.2.0"
-
-  table_name = aws_dynamodb_table.config.id
-}
-
 # --- CloudWatch: Logging
 
 resource "aws_cloudwatch_log_group" "log_group" {
@@ -222,17 +195,6 @@ resource "aws_iam_policy" "iam_policy" {
           ],
           Resource = [
             "${aws_dynamodb_table.kcl.arn}"
-          ]
-        },
-        {
-          Effect = "Allow",
-          Action = [
-            "dynamodb:DescribeTable",
-            "dynamodb:GetItem",
-            "dynamodb:Scan"
-          ],
-          Resource = [
-            "${aws_dynamodb_table.config.arn}"
           ]
         },
         {
@@ -370,14 +332,7 @@ locals {
     in_stream_name       = var.in_stream_name
     enriched_stream_name = var.enriched_stream_name
     bad_stream_name      = var.bad_stream_name
-    region               = data.aws_region.current.name
     initial_position     = var.initial_position
-
-    config_hash = local.config_hash
-
-    byte_limit    = var.byte_limit
-    record_limit  = var.record_limit
-    time_limit_ms = var.time_limit_ms
 
     assets_update_period = var.assets_update_period
 
@@ -394,10 +349,9 @@ locals {
   user_data = templatefile("${path.module}/templates/user-data.sh.tmpl", {
     accept_limited_use_license = var.accept_limited_use_license
 
-    config_b64  = base64encode(local.hocon)
-    version     = local.app_version
-    resolver    = "dynamodb:${data.aws_region.current.name}/${aws_dynamodb_table.config.name}/snowplow_resolver"
-    enrichments = "dynamodb:${data.aws_region.current.name}/${aws_dynamodb_table.config.name}/snowplow_enrichment_"
+    config_b64        = base64encode(local.hocon)
+    iglu_resolver_b64 = base64encode(local.iglu_resolver)
+    version           = local.app_version
 
     telemetry_script = join("", module.telemetry.*.amazon_linux_2_user_data)
 
@@ -410,6 +364,23 @@ locals {
     is_private_ecr_registry = local.is_private_ecr_registry
     private_ecr_registry    = var.private_ecr_registry
     region                  = data.aws_region.current.name
+
+    enrichment_campaign_attribution_b64            = base64encode(local.campaign_attribution)
+    enrichment_event_fingerprint_config_b64        = base64encode(local.event_fingerprint_config)
+    enrichment_referer_parser_b64                  = base64encode(local.referer_parser)
+    enrichment_ua_parser_config_b64                = base64encode(local.ua_parser_config)
+    enrichment_yauaa_enrichment_config_b64         = base64encode(local.yauaa_enrichment_config)
+    enrichment_anon_ip_b64                         = base64encode(var.enrichment_anon_ip)
+    enrichment_api_request_enrichment_config_b64   = base64encode(var.enrichment_api_request_enrichment_config)
+    enrichment_cookie_extractor_config_b64         = base64encode(var.enrichment_cookie_extractor_config)
+    enrichment_currency_conversion_config_b64      = base64encode(var.enrichment_currency_conversion_config)
+    enrichment_http_header_extractor_config_b64    = base64encode(var.enrichment_http_header_extractor_config)
+    enrichment_iab_spiders_and_bots_enrichment_b64 = base64encode(var.enrichment_iab_spiders_and_bots_enrichment)
+    enrichment_ip_lookups_b64                      = base64encode(var.enrichment_ip_lookups)
+    enrichment_javascript_script_config_b64        = base64encode(var.enrichment_javascript_script_config)
+    enrichment_pii_enrichment_config_b64           = base64encode(var.enrichment_pii_enrichment_config)
+    enrichment_sql_query_enrichment_config_b64     = base64encode(var.enrichment_sql_query_enrichment_config)
+    enrichment_weather_enrichment_config_b64       = base64encode(var.enrichment_weather_enrichment_config)
   })
 }
 
