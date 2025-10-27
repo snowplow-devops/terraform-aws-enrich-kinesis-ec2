@@ -1,34 +1,17 @@
-# Config Hash: ${config_hash}
 {
   "input": {
-    "type": "Kinesis"
     "appName": "${app_name}"
     "streamName": "${in_stream_name}"
-    "region": "${region}"
     "initialPosition": {
       "type": "${initial_position}"
     }
   }
   "output": {
     "good": {
-      "type": "Kinesis"
       "streamName": "${enriched_stream_name}"
-      "region": "${region}"
-      "maxBufferedTime": ${time_limit_ms} millis
-      "collection": {
-        "maxCount": ${record_limit}
-        "maxSize": ${byte_limit}
-      }
     }
     "bad": {
-      "type": "Kinesis"
       "streamName": "${bad_stream_name}"
-      "region": "${region}"
-      "maxBufferedTime": ${time_limit_ms} millis
-      "collection": {
-        "maxCount": ${record_limit}
-        "maxSize": ${byte_limit}
-      }
     }
   }
 
@@ -55,9 +38,5 @@
     "moduleName": "${telemetry_module_name}"
     "moduleVersion": "${telemetry_module_version}"
     "instanceId": $${INSTANCE_ID}
-  }
-
-  "featureFlags" : {
-    "acceptInvalid": false
   }
 }

@@ -17,7 +17,7 @@ variable "name" {
 variable "app_version" {
   description = "App version to use. This variable facilitates dev flow, the modules may not work with anything other than the default value."
   type        = string
-  default     = "3.9.0"
+  default     = "6.2.1"
 }
 
 variable "vpc_id" {
@@ -190,24 +190,6 @@ variable "initial_position" {
   description = "Where to start processing the input Kinesis Stream from (TRIM_HORIZON or LATEST)"
   default     = "TRIM_HORIZON"
   type        = string
-}
-
-variable "byte_limit" {
-  description = "The amount of bytes to buffer events before pushing them to Kinesis"
-  default     = 1000000
-  type        = number
-}
-
-variable "record_limit" {
-  description = "The number of events to buffer before pushing them to Kinesis"
-  default     = 500
-  type        = number
-}
-
-variable "time_limit_ms" {
-  description = "The amount of time to buffer events before pushing them to Kinesis"
-  default     = 500
-  type        = number
 }
 
 variable "assets_update_period" {
