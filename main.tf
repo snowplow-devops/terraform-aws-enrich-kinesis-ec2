@@ -1,6 +1,6 @@
 locals {
   module_name    = "enrich-kinesis-ec2"
-  module_version = "0.7.2"
+  module_version = "0.7.3"
 
   app_name    = "enrich-kinesis"
   app_version = var.app_version
@@ -386,7 +386,7 @@ locals {
 
 module "service" {
   source  = "snowplow-devops/service-ec2/aws"
-  version = "0.3.4"
+  version = "0.3.5"
 
   user_supplied_script = local.user_data
   name                 = var.name
